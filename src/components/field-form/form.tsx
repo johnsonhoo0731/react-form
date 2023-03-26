@@ -15,17 +15,10 @@ export default function Form<T extends Record<string, string | number>>({
   onFinish,
   onFinishFailed,
 }: Props<T>) {
-  if (onFinish) {
-    form.setCallbacks({
-      onFinish,
-    })
-  }
-
-  if (onFinishFailed) {
-    form.setCallbacks({
-      onFinishFailed,
-    })
-  }
+  form.setCallbacks({
+    onFinish,
+    onFinishFailed,
+  })
 
   return (
     <form

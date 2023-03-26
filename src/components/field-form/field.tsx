@@ -7,12 +7,13 @@ export default function Field<TName extends string = string>(
 ) {
   const { children, name } = props
 
-  const useForm = useContext(FieldContext)
+  const { getFieldValue, setFieldValue, registerFieldEntities } =
+    useContext(FieldContext)
 
   const [, forceUpdate] = useReducer((x) => x + 1, 0)
 
   useLayoutEffect(() => {
-    const unRegister = useForm?.registerFieldEntities({
+    const unRegister = registerFieldEntities({
       props,
       onStoreChange: forceUpdate,
     })
@@ -24,12 +25,12 @@ export default function Field<TName extends string = string>(
   const getControlled = (childProps: any = {}) => {
     return {
       ...childProps,
-      value: useForm?.getFieldValue(name) ?? '',
+      value: getFieldValue(name) ?? '',
       onChange: (...args: any[]) => {
         const event = args[0]
         if (event && event.target && name) {
           const newValue = event.target.value
-          useForm?.setFieldValue({
+          setFieldValue({
             [name]: newValue,
           })
         }
