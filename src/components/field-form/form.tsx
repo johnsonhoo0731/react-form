@@ -1,12 +1,13 @@
 import React from 'react'
 import FieldContext from './field-context'
+import { ErrorType } from './interface'
 import useForm from './use-form'
 
 interface Props<T extends Record<string, number | string>> {
   children?: React.ReactNode
   onFinish?: (data: T) => void
-  onFinishFailed?: (err: any[], data: T) => void
-  form: ReturnType<typeof useForm>
+  onFinishFailed?: (err: ErrorType<keyof T>[], data: T) => void
+  form?: ReturnType<typeof useForm>
 }
 
 export default function Form<T extends Record<string, string | number>>({
@@ -15,7 +16,9 @@ export default function Form<T extends Record<string, string | number>>({
   onFinish,
   onFinishFailed,
 }: Props<T>) {
-  form.setCallbacks({
+  const formInstance = useForm(form)
+
+  formInstance.setCallbacks({
     onFinish,
     onFinishFailed,
   })
@@ -25,10 +28,10 @@ export default function Form<T extends Record<string, string | number>>({
       autoComplete='off'
       onSubmit={(e) => {
         e.preventDefault()
-        form.submit()
+        formInstance.submit()
       }}
     >
-      <FieldContext.Provider value={form}>{children}</FieldContext.Provider>
+      <FieldContext.Provider value={formInstance}>{children}</FieldContext.Provider>
     </form>
   )
 }

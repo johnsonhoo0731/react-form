@@ -1,17 +1,17 @@
-import { useEffect } from 'react'
-import { Form, Field, useForm } from './components'
+// import { useEffect } from 'react'
+import { Form, Field } from './components'
 
 function App() {
-  const form = useForm()
+  // const form = useForm()
 
-  useEffect(() => {
-    form.setFieldValue({ username: 'default' })
-  }, [form])
+  // useEffect(() => {
+  //   form.setFieldValue({ username: 'default' })
+  // }, [form])
 
   return (
     <div>
       <Form
-        form={form}
+        // form={form}
         onFinish={(data) => {
           console.log(data)
         }}

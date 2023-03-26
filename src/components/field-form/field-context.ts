@@ -3,7 +3,7 @@ import useForm from './use-form'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const warningFunc: any = () => {
-  console.warn('Can not find FormContext. Please make sure you wrap Field under Form.');
+  console.warn('Can not find FieldContext. Please make sure you wrap Field under Form.');
 };
 
 const FieldContext = React.createContext<ReturnType<typeof useForm>>({

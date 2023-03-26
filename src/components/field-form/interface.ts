@@ -18,3 +18,17 @@ export interface ErrorType<TName> {
   name: TName
   message: string
 }
+
+export interface RegisterEntities<T> {
+  onStoreChange: () => void
+  props: FieldType<keyof T>
+}
+
+export interface FormInstance<T> {
+  getFieldsValue: () => T
+  getFieldValue: (name: keyof T) => T[keyof T]
+  setFieldValue: (newStore: T) => void
+  registerFieldEntities: (entity: RegisterEntities<T>) => void
+  submit: () => void
+  setCallbacks: (callback: CallbackKey) => void
+}

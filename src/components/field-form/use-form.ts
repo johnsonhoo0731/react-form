@@ -1,5 +1,11 @@
 import { useRef } from 'react'
-import { FieldType, EntitiesType, CallbackKey, ErrorType } from './interface'
+import {
+  FormInstance,
+  EntitiesType,
+  CallbackKey,
+  ErrorType,
+  RegisterEntities,
+} from './interface'
 
 class FormStore<T extends Record<string, number | string>> {
   private store: T
@@ -14,10 +20,7 @@ class FormStore<T extends Record<string, number | string>> {
       ...callback,
     }
   }
-  private registerFieldEntities = (entity: {
-    onStoreChange: () => void
-    props: FieldType<keyof T>
-  }) => {
+  private registerFieldEntities = (entity: RegisterEntities<T>) => {
     this.fieldEntities.push(entity)
 
     return () => {
@@ -55,7 +58,7 @@ class FormStore<T extends Record<string, number | string>> {
         rules[0].required &&
         (value === undefined || value === '')
       ) {
-        err.push({ message: rules[0].message ?? '',  name })
+        err.push({ message: rules[0].message ?? '', name })
       }
     })
     return err
@@ -83,12 +86,18 @@ class FormStore<T extends Record<string, number | string>> {
   }
 }
 
-export default function useForm<T extends Record<string, string | number>>() {
-  const formRef = useRef<ReturnType<FormStore<T>['getForm']> | null>(null)
+export default function useForm<T extends Record<string, string | number>>(
+  form?: FormInstance<T>
+) {
+  const formRef = useRef<FormInstance<T> | null>(null)
 
-  if (!formRef.current) {
-    const formStore = new FormStore<T>()
-    formRef.current = formStore.getForm()
+  if (form) {
+    formRef.current = form
+  } else {
+    if (!formRef.current) {
+      const formStore = new FormStore<T>()
+      formRef.current = formStore.getForm()
+    }
   }
 
   return formRef.current
