@@ -10,7 +10,10 @@ function App() {
 
   return (
     <div>
-      <Form
+      <Form<{
+        username: string
+        password: string
+      }>
         // form={form}
         onFinish={(data) => {
           console.log(data)
