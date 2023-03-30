@@ -5,9 +5,10 @@ import {
   CallbackKey,
   ErrorType,
   RegisterEntities,
+  Store
 } from './interface'
 
-class FormStore<T extends Record<string, number | string>> {
+class FormStore<T extends Store> {
   private store: T
   private fieldEntities = [] as EntitiesType<keyof T>[]
   private callbacks = {} as CallbackKey<T>
@@ -86,7 +87,7 @@ class FormStore<T extends Record<string, number | string>> {
   }
 }
 
-export default function useForm<T extends Record<string, string | number>>(
+export default function useForm<T extends Store>(
   form?: FormInstance<T>
 ) {
   const formRef = useRef<FormInstance<T> | null>(null)

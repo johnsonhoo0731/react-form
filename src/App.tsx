@@ -1,12 +1,12 @@
-// import { useEffect } from 'react'
-import { Form, Field } from './components'
+import { useEffect } from 'react'
+import { Form, Field, useForm } from './components'
 
 function App() {
-  // const form = useForm()
+  const form = useForm()
 
-  // useEffect(() => {
-  //   form.setFieldValue({ username: 'default' })
-  // }, [form])
+  useEffect(() => {
+    form.setFieldValue({ username: 'default' })
+  }, [form])
 
   return (
     <div>
@@ -14,7 +14,7 @@ function App() {
         username: string
         password: string
       }>
-        // form={form}
+        form={form}
         onFinish={(data) => {
           console.log(data)
         }}

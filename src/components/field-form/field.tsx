@@ -1,4 +1,4 @@
-import React, { useContext, useLayoutEffect, useReducer } from 'react'
+import React, { useContext, useEffect, useLayoutEffect, useReducer } from 'react'
 import FieldContext from './field-context'
 import { FieldType } from './interface'
 
@@ -12,7 +12,7 @@ export default function Field<TName extends string = string>(
 
   const [, forceUpdate] = useReducer((x) => x + 1, 0)
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const unRegister = registerFieldEntities({
       props,
       onStoreChange: forceUpdate,
@@ -38,7 +38,11 @@ export default function Field<TName extends string = string>(
     }
   }
   const returnChildNode = React.Children.map(children, (child) => {
-    return React.cloneElement(child, getControlled(child.props))
+    console.log(child)
+    return React.cloneElement(
+      child as React.ReactElement,
+      getControlled((child as React.ReactElement).props)
+    )
   })
 
   return <React.Fragment>{returnChildNode}</React.Fragment>
